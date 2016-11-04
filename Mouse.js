@@ -49,7 +49,7 @@ function MouseFramework(){
 		down.bind(this,mouse);*/
 		document.addEventListener("click",(function(mouse,e){			e.preventDefault();	mouse.upos(e);	that.click();	}).bind(that,mouse));
 		document.addEventListener("contextmenu",(function(mouse,e){	e.preventDefault();	mouse.upos(e);	that.rclick();	}).bind(that,mouse));
-		document.addEventListener("touchstart",function(e){			//e.preventDefault(); 
+		document.addEventListener("touchstart",function(e){			e.preventDefault(); 
 			mouse.upos(e.touches[0]);
 			console.log(e.touches[0]);
 			mouse.down = true;	
@@ -61,7 +61,7 @@ function MouseFramework(){
 		document.addEventListener("touchend",function(e){				e.preventDefault();	mouse.upos(e);mouse.down = false;	that.up();	});
 		//(function(mouse,e){		e.preventDefault();	mouse.upos(e);	that.up();		}).bind(that,mouse));
 		document.addEventListener("mousemove",(function(mouse,e){		e.preventDefault();	mouse.upos(e);	/*that.moved();*/	}).bind(that,mouse));
-		document.addEventListener("touchmove",(function(mouse,e){		//e.preventDefault();	
+		document.addEventListener("touchmove",(function(mouse,e){		e.preventDefault();	
 			mouse.upos(e.touches[0]);	/*that.moved();*/	}).bind(that,mouse));
 		
 		
