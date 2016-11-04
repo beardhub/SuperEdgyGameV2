@@ -13,7 +13,7 @@ function addScripts(path, srcs){
 	srcs.splice(0,1);
 	addScripts(path,srcs);*/
 }
-addScripts("..\\Frameworks2\\",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
+addScripts("",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
 window.onload = init;
 var eatiing;
 function init(){
@@ -49,7 +49,7 @@ function init(){
 	UU.add(U);
 	UU.color = "green";
 	U.color = "black";
-	A.setPath("..\\assets\\spaceshooter\\")
+	//A.setPath("..\\assets\\spaceshooter\\")
 	A.loadImage("shipbase","ShipBase.png");
 	A.loadImage("turret","Turret.png");
 	A.load();
