@@ -34,7 +34,7 @@ function init(){
 	registerFramework(DrawingFramework,"D");
 	registerFramework(MouseFramework,"Ms");
 	//makeShortcut(new AFr.Manager(),"A");
-	M.createCanvas(document.body.clientWidth-50,document.body.clientHeight);
+	M.createCanvas(window.innerWidth,window.innerHeight);//document.body.clientWidth-50,document.body.clientHeight);
 	var smaller = M.canvas.width, larger = M.canvas.height;
 	if (smaller > M.canvas.height){
 		smaller = M.canvas.height;
