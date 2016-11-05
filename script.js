@@ -246,7 +246,7 @@ function WittleBittySquare(){
 	this.update = function(){
 		
 		
-		if (Ms.isdown()){
+		if (Ms.isdown() && Ms.reld(aim)>20){
 			//console.log(Ms.rely(this));
 			//this.x+=Ms.relx(this);///speed;
 			//this.y+=Ms.rely(this);///speed;
