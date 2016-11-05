@@ -224,7 +224,8 @@ function WittleBittySquare(){
 			//len = Math.sqrt((this.x-aim.x)*(this.x-aim.x)+(this.y-aim.y)*(this.y-aim.y));
 			//a = Math.atan2(-this.y+aim.y,-this.x+aim.x);
                 //this.x=0; 
-aim.x=Ms.x();aim.y=Ms.y();
+		aim.x=Ms.x();
+		aim.y=Ms.y();
 	}
 	this.keydown = function(k){
 		if (k.name == "L" && (hack==""||hack=="LO"))
@@ -281,7 +282,9 @@ aim.x=Ms.x();aim.y=Ms.y();
 		g.font = "15px Arial";
 		g.fillText("score   "+score, 10,15);//this.x-30, this.y);
 		g.fillText("hiscore "+high, 10,30);//this.x-30, this.y+15);
-g.fillStyle="red";g.fillRect(aim.x-10,aim.y-10,20,20);
+		
+		g.fillStyle="red";
+		g.fillRect(aim.x-10-this.container.x,aim.y-10-this.container.y,20,20);
 	}
 }
 // Setup before beginning update loop
