@@ -275,13 +275,13 @@ aim.x=Ms.x();aim.y=Ms.y();
 		
 	}
 	this.render = function(g){
-g.fillStyle="red";g.fillRect(this.x-10,this.y-10,20,20);
 		g.fillStyle = "white";
 		bas.render(g);
 		//tur.render(g);
 		g.font = "15px Arial";
 		g.fillText("score   "+score, 10,15);//this.x-30, this.y);
 		g.fillText("hiscore "+high, 10,30);//this.x-30, this.y+15);
+g.fillStyle="red";g.fillRect(this.x-10,this.y-10,20,20);
 	}
 }
 // Setup before beginning update loop
