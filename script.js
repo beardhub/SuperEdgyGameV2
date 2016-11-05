@@ -223,6 +223,7 @@ function WittleBittySquare(){
 		//dist.y = aim.y;
 			//len = Math.sqrt((this.x-aim.x)*(this.x-aim.x)+(this.y-aim.y)*(this.y-aim.y));
 			//a = Math.atan2(-this.y+aim.y,-this.x+aim.x);
+                 aim.x=Ms.x();aim.y=Ms.y();
 	}
 	this.keydown = function(k){
 		if (k.name == "L" && (hack==""||hack=="LO"))
@@ -249,8 +250,8 @@ function WittleBittySquare(){
 			//console.log(Ms.rely(this));
 			//this.x+=Ms.relx(this);///speed;
 			//this.y+=Ms.rely(this);///speed;
-			this.x+=speed*Math.cos(Math.atan2(Ms.rely(this),Ms.relx(this)));
-			this.y+=speed*Math.sin(Math.atan2(Ms.rely(this),Ms.relx(this)));
+			this.x+=speed*Math.cos(Math.atan2(Ms.rely(aim),Ms.relx(aim)));
+			this.y+=speed*Math.sin(Math.atan2(Ms.rely(aim),Ms.relx(aim)));
 			
 			//this.x+=speed*Math.cos(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
 			//this.y+=speed*Math.sin(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
