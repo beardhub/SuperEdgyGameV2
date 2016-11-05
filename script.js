@@ -247,10 +247,10 @@ function WittleBittySquare(){
 		
 		if (Ms.isdown()){
 			//console.log(Ms.rely(this));
-			this.x+=Ms.relx(this);///speed;
-			this.y+=Ms.rely(this);///speed;
-			//this.x+=speed*Math.cos(Math.atan2(Ms.rely(this),Ms.relx(this)));
-			//this.y+=speed*Math.sin(Math.atan2(Ms.rely(this),Ms.relx(this)));
+			//this.x+=Ms.relx(this);///speed;
+			//this.y+=Ms.rely(this);///speed;
+			this.x+=speed*Math.cos(Math.atan2(Ms.rely(this),Ms.relx(this)));
+			this.y+=speed*Math.sin(Math.atan2(Ms.rely(this),Ms.relx(this)));
 			
 			//this.x+=speed*Math.cos(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
 			//this.y+=speed*Math.sin(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
