@@ -289,7 +289,7 @@ function start(){
 	//console.log(A.ready);
 	U.add(new WittleBittySquare(),"p");
 	U.add(new Foodses());
-	setInterval(function(){U.add(new Foodses());},1000);
+	setInterval(function(){U.add(new Foodses());},10000);
 	//var mini = new UI.DBox(700,0,100,100);
 	//U.add(mini);
 	//mini.color = "red";
