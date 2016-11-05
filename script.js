@@ -284,7 +284,7 @@ function WittleBittySquare(){
 		g.fillText("hiscore "+high, 10,30);//this.x-30, this.y+15);
 		
 		g.fillStyle="red";
-		g.fillRect(aim.x-10-Ms.relx(this.container),aim.y-10-Ms.rely(this.container),20,20);
+		g.fillRect(aim.x-10+Ms.relx(this.container),aim.y-10+Ms.rely(this.container),20,20);
 	}
 }
 // Setup before beginning update loop
