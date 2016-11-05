@@ -223,7 +223,8 @@ function WittleBittySquare(){
 		//dist.y = aim.y;
 			//len = Math.sqrt((this.x-aim.x)*(this.x-aim.x)+(this.y-aim.y)*(this.y-aim.y));
 			//a = Math.atan2(-this.y+aim.y,-this.x+aim.x);
-                this.x=0; aim.x=Ms.x();aim.y=Ms.y();
+                //this.x=0; 
+aim.x=Ms.x();aim.y=Ms.y();
 	}
 	this.keydown = function(k){
 		if (k.name == "L" && (hack==""||hack=="LO"))
@@ -274,6 +275,7 @@ function WittleBittySquare(){
 		
 	}
 	this.render = function(g){
+g.fillStyle="red";g.fillRect(this.x-10,this.y-10,20,20);
 		g.fillStyle = "white";
 		bas.render(g);
 		//tur.render(g);
