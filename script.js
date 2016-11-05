@@ -214,7 +214,7 @@ function WittleBittySquare(){
 		this.y = this.container.h/2;
 		this.container.add(new UI.Follow(bas,this));
 		//this.container.add(new UI.Follow(tur,this));
-		this.container.add(new UI.Follow(aim,Ms));
+		//this.container.add(new UI.Follow(aim,Ms));
 	}
 	this.mousedown = function(){
 		//this.x = Ms.x();
