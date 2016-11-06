@@ -60,8 +60,10 @@ function AssetsFramework(){
 		for (var i = 0; i < iloadq.length; i++)
 			iloadq[i].img.src = iloadq[i].source;
 			var next = doneLoading.bind(this);
-		var interval = setTimeout(function(){
-			if (isloaded())next.call();},10);}
+		if (isloaded()) next.call();
+		else setTimeout(startload,15);
+		//var interval = setTimeout(function(){
+		//	if (isloaded())next.call();},10);}
 	function doneLoading(){
 		if (failed == 0) console.log("Asset loading complete. All files loaded successfully.");
 		else if (failed == 1) console.log("Asset loading complete. 1 file failed to load.")
