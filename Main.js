@@ -10,7 +10,8 @@ function MainFramework(){
 			if (exists(start))start();
 			executionLoop();
 		}
-		else {console.log("Waiting for frameworks to load...");setTimeout(this.startLoop.bind(this),50);}
+		else {//console.log("Waiting for frameworks to load...");
+		      setTimeout(this.startLoop.bind(this),50);}
 	}
 	this.createCanvas = function(w,h){
 		if (typeof w == "number" && typeof h == "number")
@@ -38,12 +39,25 @@ function MainFramework(){
 	this.n2FN = function(n){return FindFrameworkAndDo(n,function(f){return f.frameworkName;},true);}
 	this.allLoaded = function(){
 		var ready = true;
+		var notready = "Waiting for Frameworks to load:\n";
 		for (var p in Frameworks){
+			var fready = true;
+			if (typeof Frameworks[p].ready == "boolean")
+				fready = Frameworks[p].ready;
+			if (typeof Frameworks[p].ready == "function")
+				fready = Frameworks[p].ready();
+			if (!fready)	notready += Frameworks[p].frameworkName+"\n";
+			ready = ready && fready;
+		}
+		if (!ready)
+			console.log(notready);
+		
+		/*for (var p in Frameworks){
 			//console.log(p+" "+Frameworks[p].ready);
 			if (typeof Frameworks[p].ready == "boolean")
 				ready = ready && Frameworks[p].ready;
 			else if (typeof Frameworks[p].ready == "function")
-				ready = ready && Frameworks[p].ready();}
+				ready = ready && Frameworks[p].ready();}*/
 		return ready;
 	}
 	this.FindFrameworkAndDo = function(frameworkName, action, giveframework){
