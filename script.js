@@ -259,12 +259,15 @@ function WittleBittySquare(){
 			//this.y+=speed*Math.sin(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
 		}
 		else {
-			if (K.Keys.W.down || K.Keys.up.down) this.y-=speed;
-			if (K.Keys.A.down || K.Keys.left.down) this.x-=speed;
-			if (K.Keys.S.down || K.Keys.down.down) this.y+=speed;
-			if (K.Keys.D.down || K.Keys.right.down) this.x+=speed;
+			var dx = 0, dy = 0;
+			if (K.Keys.W.down || K.Keys.up.down) 	dy--;	//this.y-=speed;
+			if (K.Keys.A.down || K.Keys.left.down) 	dx--;	//this.x-=speed;
+			if (K.Keys.S.down || K.Keys.down.down) 	dy++;	//this.y+=speed;
+			if (K.Keys.D.down || K.Keys.right.down) dx++;	//this.x+=speed;
+			this.x+=speed*Math.cos(Math.atan2(dy,dx));
+			this.y+=speed*Math.sin(Math.atan2(dy,dx));
 		}
-		console.log(this.x+" "+this.y);
+		//console.log(this.x+" "+this.y);
 		
 		//if (Foodses.prototype.dir < -30) Foodses.prototype.dir = 1;
 		//if (Foodses.prototype.dir < 1) Foodses.prototype.dir--;
