@@ -62,10 +62,11 @@ function AssetsFramework(){
 		var next = doneLoading.bind(this);
 		var checkloop = function(){
 			if (isloaded()) next.call();
+			setTimeout(checkloop,15);
 		}
+		checkloop();
 		//if (isloaded()) next.call();
 		//else 
-		setTimeout(checkloop,15);
 		//var interval = setTimeout(function(){
 		//	if (isloaded())next.call();},10);
 	}
