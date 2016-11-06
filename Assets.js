@@ -61,7 +61,7 @@ function AssetsFramework(){
 			iloadq[i].img.src = iloadq[i].source;
 		var next = doneLoading.bind(this);
 		var checkloop = function(){
-			console.log(isloaded());
+			//console.log(isloaded());
 			if (isloaded()){ next.call();return;}
 			else setTimeout(checkloop,15);
 		}
