@@ -63,7 +63,7 @@ function AssetsFramework(){
 		var checkloop = function(){
 			console.log(isloaded());
 			if (isloaded()){ next.call();return;}
-			setTimeout(checkloop,15);
+			else setTimeout(checkloop,15);
 		}
 		checkloop();
 		//if (isloaded()) next.call();
