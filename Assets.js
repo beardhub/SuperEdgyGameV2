@@ -66,7 +66,8 @@ function AssetsFramework(){
 		//if (isloaded()) next.call();
 		else setTimeout(checkloop,15);
 		//var interval = setTimeout(function(){
-		//	if (isloaded())next.call();},10);}
+		//	if (isloaded())next.call();},10);
+	}
 	function doneLoading(){
 		if (failed == 0) console.log("Asset loading complete. All files loaded successfully.");
 		else if (failed == 1) console.log("Asset loading complete. 1 file failed to load.")
