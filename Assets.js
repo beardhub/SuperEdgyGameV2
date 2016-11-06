@@ -60,8 +60,11 @@ function AssetsFramework(){
 		for (var i = 0; i < iloadq.length; i++)
 			iloadq[i].img.src = iloadq[i].source;
 			var next = doneLoading.bind(this);
-		if (isloaded()) next.call();
-		else setTimeout(startload,15);
+		var checkloop = function(){
+			if (isloaded()) next.call();
+		}
+		//if (isloaded()) next.call();
+		else setTimeout(checkloop,15);
 		//var interval = setTimeout(function(){
 		//	if (isloaded())next.call();},10);}
 	function doneLoading(){
