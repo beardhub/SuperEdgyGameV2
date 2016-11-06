@@ -264,8 +264,10 @@ function WittleBittySquare(){
 			if (K.Keys.A.down || K.Keys.left.down) 	dx--;	//this.x-=speed;
 			if (K.Keys.S.down || K.Keys.down.down) 	dy++;	//this.y+=speed;
 			if (K.Keys.D.down || K.Keys.right.down) dx++;	//this.x+=speed;
-			this.x+=speed*Math.cos(Math.atan2(dy,dx));
-			this.y+=speed*Math.sin(Math.atan2(dy,dx));
+			if (dx!==0||dy!==0){
+				this.x+=speed*Math.cos(Math.atan2(dy,dx));
+				this.y+=speed*Math.sin(Math.atan2(dy,dx));
+			}
 		}
 		//console.log(this.x+" "+this.y);
 		
