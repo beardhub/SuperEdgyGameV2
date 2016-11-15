@@ -575,9 +575,9 @@ function WittleBittySquare(){
 		g.fillStyle = "white";
 		bas.render(g);
 		//tur.render(g);
-		g.font = "15px Arial";
-		g.fillText("score   "+score, 10,15);//this.x-30, this.y);
-		g.fillText("hiscore "+high, 10,30);//this.x-30, this.y+15);
+		g.font = "35px Arial";
+		g.fillText("score   "+score, 10,35);//this.x-30, this.y);
+		g.fillText("hiscore "+high, 10,70);//this.x-30, this.y+15);
 		
 		//g.fillStyle="red";
 		//g.fillRect(aim.x-10-this.container.x,aim.y-10-this.container.y,20,20);//+Ms.rely(this.container),20,20);
