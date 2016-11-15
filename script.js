@@ -434,8 +434,8 @@ function Textdrop(txt, dur, x, y, col){
 	}
 	this.render = function(g){
 		g.fillStyle = col;
-		g.font = "bold 15px Arial";
-		g.fillText(text, this.x, this.y-18*(1-Math.pow(count/duration-.2,2)));
+		g.font = "bold 35px Arial";
+		g.fillText(text, this.x, this.y-30*(1-Math.pow(count/duration-.2,2)));
 	//	-5*Math.sin(count/duration*3/2*Math.PI));
 	}
 }
