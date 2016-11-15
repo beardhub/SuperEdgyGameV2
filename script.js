@@ -13,16 +13,28 @@ function addScripts(path, srcs){
 	srcs.splice(0,1);
 	addScripts(path,srcs);*/
 }
-addScripts("",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
+addScripts("..\\Frameworks2\\",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
+/*
+var style = document.createElement('style'),
+css = "body {user-select: none;draggable : false;-ms-user-select: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-webkit-touch-callout: none;-webkit-user-drag: none;}";
+style.type = 'text/css';
+if (style.styleSheet){
+  style.styleSheet.cssText = css;
+} else {
+  style.appendChild(document.createTextNode(css));
+}
+document.head.appendChild(style);
+*/
 window.onload = init;
-var eatiing;
+/*
+var meta = document.createElement('meta');
+meta.name = "viewport";
+meta.content = "width=device-width, initial-scale=0.1, user-scalable=0";
+document.head.appendChild(meta);*/
+//document.body.position = "fixed";
+//document.body.style.overflow = "hidden";
 function init(){
-	var meta = document.createElement('meta');
-	meta.name = "viewport";
-	meta.content = "width=device-width, initial-scale=0.1, user-scalable=0";
-	document.head.appendChild(meta);
-	document.body.position = "fixed";
-	document.body["overflow-y"] = "scroll";document.body.style.overflow = "hidden";
+document.body["overflow-y"] = "scroll";document.body.style.overflow = "hidden";
 	//body { position: fixed; overflow-y:scroll }
 	//meta.httpEquiv = "X-UA-Compatible";
 	//meta.content = "IE=edge";
@@ -34,7 +46,7 @@ function init(){
 	registerFramework(DrawingFramework,"D");
 	registerFramework(MouseFramework,"Ms");
 	//makeShortcut(new AFr.Manager(),"A");
-	M.createCanvas(window.innerWidth,window.innerHeight);//document.body.clientWidth-50,document.body.clientHeight);
+	M.createCanvas(window.innerWidth-10,window.innerHeight-10);//document.body.clientWidth-50,document.body.clientHeight);
 	var smaller = M.canvas.width, larger = M.canvas.height;
 	if (smaller > M.canvas.height){
 		smaller = M.canvas.height;
@@ -47,9 +59,9 @@ function init(){
 	makeShortcut(new UI.DBox((M.canvas.width-smaller)/2,(M.canvas.height-smaller)/2,smaller,smaller), "UU");
 	U.camera.zoomto(smaller/size);
 	UU.add(U);
-	UU.color = "green";
+	UU.color = "black";
 	U.color = "black";
-	//A.setPath("..\\assets\\spaceshooter\\")
+	A.setPath("..\\assets\\spaceshooter\\")
 	A.loadImage("shipbase","ShipBase.png");
 	A.loadImage("turret","Turret.png");
 	A.load();
@@ -86,10 +98,21 @@ function init(){
 		//if (Keys.A.down) x-=5;
 		//if (Keys.D.down) x+=5;
 	//}
+	makeShortcut(Date.now()/1000,"lasttime");
 	M.setLoop(function(){
-		UU.update();
+		var before = Date.now()/1000;
+		var dt = before - lasttime;
+		lasttime = before;
+		UU.update(dt);
 		UU.render(M.canvas.getContext("2d"));
+		//deltatime = Date.now()/1000-before;
 	});
+    //var now = Date.now();
+    ///var dt = now - lastUpdate;
+    //lastUpdate = now;
+
+    //update(dt);
+   // render(dt);
 	Ms.setcanvas(M.canvas);
 	Ms.setupListeners({
 		down:U.mousedown.bind(U),//function(){	U.mousedown();console.log("dddown");},
@@ -99,7 +122,7 @@ function init(){
 		rclick:function(){	U.mouserclick();}
 	});
 	var hub = new K.KeyHub();
-	hub.down = function(key){
+	/*hub.down = function(key){
 		if (key === K.Keys.W) w = true;
 		if (key === K.Keys.A) a = true;
 		if (key === K.Keys.S) s = true;
@@ -111,7 +134,7 @@ function init(){
 		if (key === K.Keys.A) a = false;
 		if (key === K.Keys.S) s = false;
 		if (key === K.Keys.D) d = false;
-	}
+	}*/
 	hub = new K.KeyHub();
 	hub.down = U.keydown.bind(U);
 	hub.up = U.keyup.bind(U);
@@ -128,6 +151,198 @@ function init(){
 	K.setupListeners(hub);
 	M.startLoop();
 }
+function Vec(x,y){
+	this.x = x;
+	this.y = y;
+	this.copy = function(){
+		return new Vec(this.x,this.y);
+	}
+	this.add = function(vec){
+		this.x+=vec.x;
+		this.y+=vec.y;
+		return this;
+	}
+	this.sub = function(vec){
+		this.x-=vec.x;
+		this.y-=vec.y;
+		return this;
+	}
+	this.mult = function(scal){
+		this.x*=scal;
+		this.y*=scal;
+		return this;
+	}
+	this.ang = function(){
+		return Math.atan2(this.y,this.x);
+	}
+	this.rotate = function(a){
+		a+=this.ang();
+		this.rotateto(a);
+		return this;
+	}
+	this.rotateto = function(a){
+		var l = this.len();
+		this.x = l*Math.cos(a);
+		this.y = l*Math.sin(a);
+		return this;
+	}
+	this.i = function(){
+		this.y = 0;
+		return this;
+	}
+	this.j = function(){
+		this.x = 0;
+		return this;
+	}
+	this.unit = function(){
+		if (this.len() == 0){
+			this.x = 0;
+			this.y = 0;
+			return;
+		}
+		var l = this.len();
+		this.x/=l;
+		this.y/=l;
+		return this;
+	}
+	this.len = function(){
+		return Math.sqrt(this.x*this.x+this.y*this.y);
+	}
+	this.setLen = function(len){
+		this.unit();
+		this.mult(len);
+		return this;
+	}
+}
+function WhiteBlot(){
+	var speed = .5;
+	var pos = new Vec(Math.random()/2+1/4,Math.random()/2+1/4);
+	var vel = new Vec(0,0);
+	this.evalue = 1;
+	this.mvalue = 5;
+	this.init = function(){
+		pos.x*=this.container.w;
+		pos.y*=this.container.h;
+		vel = new Vec(pos.x-this.container.w/2,pos.y-this.container.h/2);
+		vel.setLen(speed);
+		this.container.add(new UI.Follow(this,pos));
+	}
+	this.eat = function(){
+		U.get("p").eat(this);
+		this.container.add(new WhiteBlot());
+		this.container.add(new Textdrop("+"+this.evalue, 1, pos.x, pos.y, "green"));
+		this.container.remove(this);
+	}
+	this.miss = function(){
+		U.get("p").miss(this);
+		this.container.add(new Textdrop("-"+this.mvalue, 1, pos.x, pos.y, "red"));
+		this.container.remove(this);
+	}
+	this.update = function(){
+		pos.add(vel);
+		if (pos.x<0||pos.y<0||pos.x>this.container.w||pos.y>this.container.h)
+			this.miss();
+		if (new Vec(U.get("p").x,U.get("p").y).sub(pos).len() < 40)
+			this.eat();
+	}
+	this.render = function(g){
+		g.fillStyle = "white";
+		g.fillRect(this.x-5,this.y-5,10,10);
+	}
+}
+function RedBlot(){
+	var speed = 1;
+	var pos = new Vec(Math.random()/2+1/4,Math.random()/2+1/4);
+	var vel = new Vec(0,0);
+	this.evalue = 10;
+	this.mvalue = 35;
+	this.init = function(){
+		pos.x*=this.container.w;
+		pos.y*=this.container.h;
+		vel = new Vec(pos.x-this.container.w/2,pos.y-this.container.h/2);
+		vel.setLen(speed);
+		this.container.add(new UI.Follow(this,pos));
+	}
+	this.eat = function(){
+		U.get("p").eat(this);
+		this.container.add(new Textdrop("+"+this.evalue, 1, pos.x, pos.y, "green"));
+		this.container.remove(this);
+	}
+	this.miss = function(){
+		U.get("p").miss(this);
+		this.container.add(new Textdrop("-"+this.mvalue, 1, pos.x, pos.y, "red"));
+		this.container.remove(this);
+	}
+	this.update = function(){
+		pos.add(vel);
+		if (pos.x<0||pos.y<0||pos.x>this.container.w||pos.y>this.container.h)
+			this.miss();
+		if (new Vec(U.get("p").x,U.get("p").y).sub(pos).len() < 40)
+			this.eat();
+	}
+	this.render = function(g){
+		g.fillStyle = "red";
+		g.fillRect(this.x-5,this.y-5,10,10);
+	}
+}
+function GoldenBlot(){
+	var speed = 13;
+	var pos = new Vec(Math.random()/2+1/4,Math.random()/2+1/4);
+	var vel = new Vec(0,0);
+	var bounces = 0;
+	var maxbounces = 2;
+	this.evalue = 100;
+	this.mvalue = 0;
+	this.init = function(){
+		console.log("goldenguyiscool");
+		pos.x*=this.container.w;
+		pos.y*=this.container.h;
+		vel = new Vec(speed, 0).rotateto(Math.random()*Math.PI*2);
+		//console.log(vel.len());
+		//vel = new Vec(pos.x-this.container.w/2,pos.y-this.container.h/2);
+		//vel.setLen(speed);
+		this.container.add(new UI.Follow(this,pos));
+	}
+	this.eat = function(){
+		U.get("p").eat(this);
+		this.container.add(new Textdrop("+"+this.evalue, 1, pos.x, pos.y, "yellow"));
+		this.container.remove(this);
+	}
+	this.miss = function(){
+		U.get("p").miss(this);
+		this.container.add(new Textdrop("-"+this.mvalue, 1, pos.x, pos.y, "red"));
+		this.container.remove(this);
+	}
+	this.bounce = function(horiz){
+		bounces++;
+		if (bounces > maxbounces)
+			this.miss();
+		if (horiz)	vel.x*=-1;
+		if (!horiz)	vel.y*=-1;
+		//vel.rotate((Math.random()-.5)*Math.PI/2);
+		//pos.add(vel);
+	}
+	this.update = function(){
+		pos.add(vel);
+		if (pos.x<0||pos.x>this.container.w)
+			this.bounce(true);
+		if (pos.y<0||pos.y>this.container.h)
+			this.bounce(false);
+//		if (pos.x<0||pos.y<0||pos.x>this.container.w||pos.y>this.container.h)
+	//		this.miss();
+		if (new Vec(U.get("p").x,U.get("p").y).sub(pos).len() < 40)
+			this.eat();
+	}
+	this.render = function(g){
+		g.fillStyle = "yellow";
+		//console.log(this.x+" "+this.y);
+		g.fillRect(this.x-5,this.y-5,10,10);
+	}
+}
+
+
+
+
 function Foodses(){
 	var a = 0;
 	var speed = .5;
@@ -168,8 +383,61 @@ function Foodses2(){
 	}
 	
 }
-function Feeder(){
-	
+function Spawner(blottemplate){
+	this.template = blottemplate;
+	this.delay = 10;
+	this.count = 0;
+	this.spawn = function(){
+		this.count = 0;
+		U.add(new this.template());
+	}
+	this.shouldspawn = function(){
+		return this.count > this.delay;
+	}
+	this.setdelay = function(d){
+		this.delay = d;
+		return this;
+	}
+	this.setcond = function(f){
+		this.shouldspawn = f;
+		return this;
+	}
+	this.setspawn = function(f){
+		this.spawn = f;
+		return this;
+	}
+	this.update = function(delta){
+		this.count+=delta;
+		if (this.shouldspawn())
+			this.spawn();
+	}
+}
+function Textdrop(txt, dur, x, y, col){
+	var text = txt,
+	duration = dur,
+	color = col,
+	count = 0;
+	this.x = x;
+	this.y = y;
+	this.init = function(){
+		if (this.y < 40)
+			this.y+=40;
+		if (this.x > this.container.w-30)
+			this.x-=30;
+		if (this.x < 5)
+			this.x+=5;
+	}
+	this.update = function(delta){
+		count+=delta
+		if (count > duration)
+			this.container.remove(this);
+	}
+	this.render = function(g){
+		g.fillStyle = col;
+		g.font = "bold 15px Arial";
+		g.fillText(text, this.x, this.y-18*(1-Math.pow(count/duration-.2,2)));
+	//	-5*Math.sin(count/duration*3/2*Math.PI));
+	}
 }
 function Player(){
 	
@@ -197,16 +465,19 @@ function WittleBittySquare(){
 	//this.init = function(){
 	//	console.log("Efeffee"+this.container.w);
 	//}
-	this.eat = function(){
-		score++;
+	this.eat = function(blot){
+		score+=blot.evalue;
 		if (score > high)
 			high = score;
 		//console.log(score);
 		//if (score > 250)
 		//	clearInterval (eating);
 	}
-	this.lose = function(){
-		score = Math.round(score*.85);
+	this.miss = function(blot){
+		score-=blot.mvalue;
+		if (score < 0)
+			score = 0;
+		//score = Math.round(score*.85);
 		//console.log(score);
 	}
 	this.init = function(){
@@ -223,10 +494,16 @@ function WittleBittySquare(){
 		//dist.y = aim.y;
 			//len = Math.sqrt((this.x-aim.x)*(this.x-aim.x)+(this.y-aim.y)*(this.y-aim.y));
 			//a = Math.atan2(-this.y+aim.y,-this.x+aim.x);
-                //this.x=0; 
+//this.x=0; 
 		aim.x=Ms.x();
 		aim.y=Ms.y();
 	}
+	this.keydown = function(k){
+		//this.x-=20;
+		//if (k.name=="space") //this.y-=20;
+		//	U.add(new GoldenBlot());
+	}
+	/*
 	this.keydown = function(k){
 		if (k.name == "L" && (hack==""||hack=="LO"))
 			hack+=k.name;
@@ -244,7 +521,7 @@ function WittleBittySquare(){
 			hack = "";
 			clearInterval(dblspwn);
 		}
-	}
+	}*/
 	this.update = function(){
 		
 		
@@ -252,8 +529,12 @@ function WittleBittySquare(){
 			//console.log(Ms.rely(this));
 			//this.x+=Ms.relx(this);///speed;
 			//this.y+=Ms.rely(this);///speed;
-			this.x+=speed*Math.cos(Math.atan2(Ms.rely(aim),Ms.relx(aim)));
-			this.y+=speed*Math.sin(Math.atan2(Ms.rely(aim),Ms.relx(aim)));
+			var ddx = speed*Math.cos(Math.atan2(Ms.rely(aim),Ms.relx(aim))),
+				ddy = speed*Math.sin(Math.atan2(Ms.rely(aim),Ms.relx(aim)));
+			if (this.x+ddx > 0 && this.x+ddx < this.container.w)
+				this.x+=ddx;
+			if (this.y+ddy > 0 && this.y+ddy < this.container.h)
+				this.y+=ddy;
 			
 			//this.x+=speed*Math.cos(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
 			//this.y+=speed*Math.sin(Math.atan2(Ms.rely(this.container)-this.y,Ms.relx(this.container)-this.x));
@@ -265,8 +546,12 @@ function WittleBittySquare(){
 			if (K.Keys.S.down || K.Keys.down.down) 	dy++;	//this.y+=speed;
 			if (K.Keys.D.down || K.Keys.right.down) dx++;	//this.x+=speed;
 			if (dx!==0||dy!==0){
-				this.x+=speed*Math.cos(Math.atan2(dy,dx));
-				this.y+=speed*Math.sin(Math.atan2(dy,dx));
+				var ddx = speed*Math.cos(Math.atan2(dy,dx)),
+					ddy = speed*Math.sin(Math.atan2(dy,dx));
+				if (this.x+ddx > 0 && this.x+ddx < this.container.w)
+					this.x+=ddx;
+				if (this.y+ddy > 0 && this.y+ddy < this.container.h)
+					this.y+=ddy;
 			}
 		}
 		//console.log(this.x+" "+this.y);
@@ -294,16 +579,19 @@ function WittleBittySquare(){
 		g.fillText("score   "+score, 10,15);//this.x-30, this.y);
 		g.fillText("hiscore "+high, 10,30);//this.x-30, this.y+15);
 		
-		g.fillStyle="red";
-		g.fillRect(aim.x-10-this.container.x,aim.y-10-this.container.y,20,20);//+Ms.rely(this.container),20,20);
+		//g.fillStyle="red";
+		//g.fillRect(aim.x-10-this.container.x,aim.y-10-this.container.y,20,20);//+Ms.rely(this.container),20,20);
 	}
 }
 // Setup before beginning update loop
 function start(){
 	//console.log(A.ready);
 	U.add(new WittleBittySquare(),"p");
-	U.add(new Foodses());
-	setInterval(function(){U.add(new Foodses());},10000);
+	U.add(new WhiteBlot());
+	U.add(new Spawner(WhiteBlot));
+	U.add(new Spawner(RedBlot).setdelay(20).setcond(function(){return Math.random()<0.005&&this.count>this.delay;}));
+	U.add(new Spawner(GoldenBlot).setdelay(30).setcond(function(){return Math.random()<0.005&&this.count>this.delay;}));
+	//setInterval(function(){U.add(new Foodses());},10000);
 	//var mini = new UI.DBox(700,0,100,100);
 	//U.add(mini);
 	//mini.color = "red";
