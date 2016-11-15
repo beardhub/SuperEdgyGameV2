@@ -13,7 +13,7 @@ function addScripts(path, srcs){
 	srcs.splice(0,1);
 	addScripts(path,srcs);*/
 }
-addScripts("..\\Frameworks2\\",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
+addScripts("",["Main.js","Keys.js","UI.js","Assets.js","Drawing.js","Mouse.js"]);
 /*
 var style = document.createElement('style'),
 css = "body {user-select: none;draggable : false;-ms-user-select: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-webkit-touch-callout: none;-webkit-user-drag: none;}";
@@ -61,7 +61,7 @@ document.body["overflow-y"] = "scroll";document.body.style.overflow = "hidden";
 	UU.add(U);
 	UU.color = "black";
 	U.color = "black";
-	A.setPath("..\\assets\\spaceshooter\\")
+	//A.setPath("..\\assets\\spaceshooter\\")
 	A.loadImage("shipbase","ShipBase.png");
 	A.loadImage("turret","Turret.png");
 	A.load();
