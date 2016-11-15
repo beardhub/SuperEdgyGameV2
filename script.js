@@ -420,12 +420,12 @@ function Textdrop(txt, dur, x, y, col){
 	this.x = x;
 	this.y = y;
 	this.init = function(){
-		if (this.y < 40)
-			this.y+=40;
-		if (this.x > this.container.w-30)
-			this.x-=30;
-		if (this.x < 5)
-			this.x+=5;
+		if (this.y < 60)
+			this.y+=60;
+		if (this.x > this.container.w-50)
+			this.x-=50;
+		if (this.x < 10)
+			this.x+=10;
 	}
 	this.update = function(delta){
 		count+=delta
