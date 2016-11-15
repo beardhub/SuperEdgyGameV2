@@ -149,11 +149,11 @@ function UIFramework(){
 			else return systems[name].get(sub);}
 		this.has = function(name){
 			return exists(systems[name]);}
-		this.update = function(){
+		this.update = function(delta){
 			if (this.frozen || this.hidden)	return;
 			for (var i = 0; i < q.length; i++)
 				if (!q[i].frozen && exists(q[i].update))
-					q[i].update();}
+					q[i].update(delta);}
 		this.render = function(g){
 			if (this.invisible || this.hidden)	return;
 			renderBefore.call(this,g);
